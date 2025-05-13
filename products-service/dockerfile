@@ -24,11 +24,14 @@ COPY --from=builder /app /var/www
 COPY . /var/www
 
 # Permissões
-RUN chown -R www-data:www-data /var/www/storage
-RUN chmod -R 775 /var/www/storage
+RUN mkdir -p /var/www/storage/framework/{cache,sessions,views} \
+    && chown -R www-data:www-data /var/www/storage \
+    && chmod -R 775 /var/www/storage
 
 # Expõe a porta do PHP-FPM
 EXPOSE 9000
 
 # Comando de inicialização
-CMD ["php-fpm"]
+COPY startup.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/startup.sh
+CMD ["startup.sh"]

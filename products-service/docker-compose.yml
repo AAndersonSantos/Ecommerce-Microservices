@@ -16,6 +16,7 @@ services:
   # Banco de Dados MySQL
   products-db:
     image: mysql:8.0
+    container_name: products-db
     environment:
       MYSQL_DATABASE: ecommerce_products
       MYSQL_ROOT_PASSWORD: root
@@ -25,10 +26,12 @@ services:
   # Redis
   products-redis:
     image: redis:alpine
+    container_name: products-redis
 
   # Nginx
   products-web:
     image: nginx:alpine
+    container_name: products-web
     ports:
       - "8001:80"
     volumes:
